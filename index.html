@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário de Parceria e Oportunidades</title>
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1f2d3d; /* Azul Marinho */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 16px;
+            box-shadow: 0 10px 60px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            box-sizing: border-box;
+            margin-top: 50px;
+            animation: fadeIn 0.7s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Cabeçalho */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: headerAnimation 0.8s ease-in-out;
+        }
+
+        @keyframes headerAnimation {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header img {
+            width: 450px; /* Aumentando o logo para 450px */
+            margin-bottom: 20px;
+        }
+
+        /* Perguntas e Opções */
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .question p {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .option input {
+            margin-right: 15px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .option:hover {
+            color: #007bff;
+            transform: translateX(5px);
+        }
+
+        .option input:checked {
+            transform: scale(1.2);
+        }
+
+        /* Caixa de entrada Nome e Empresa */
+        .input-box {
+            margin-bottom: 20px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Caixa de E-mail */
+        .email-box, .contact-info-box {
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .email-box input, .contact-info-box input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Botão de Envio */
+        .btn {
+            background: linear-gradient(145deg, #4e73df, #224abe);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #224abe, #4e73df);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Ajuste para os boxes das perguntas 3 e 4 */
+        .question input[type="radio"], .question input[type="checkbox"] {
+            width: 25px; /* Ajustando o tamanho dos inputs */
+            height: 25px;
+        }
+
+        .question input[type="text"] {
+            width: 100%; /* Garantindo que o input de texto tenha a mesma largura dos outros campos */
+            padding: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        #improvement-box, #other-box, #contact-info-box {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://techmag.com.br/site/wp-content/uploads/2022/05/logotipo.png" alt="TechMag Logo">
+        </div>
+
+        <form id="questionnaire" action="https://formspree.io/f/xeoevrva" method="POST" onsubmit="handleSubmit(event)">
+            <!-- Campos Nome e Empresa -->
+            <div class="input-box">
+                <input type="text" id="name" name="name" placeholder="Nome" required>
+            </div>
+            <div class="input-box">
+                <input type="text" id="company" name="company" placeholder="Empresa" required>
+            </div>
+
+            <!-- Pergunta 1: A biometria é relevante para o seu negócio? -->
+            <div class="question">
+                <p>A biometria é relevante para o seu negócio?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q1-yes" name="q1" value="sim" required>
+                        <label for="q1-yes">Sim</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1-no" name="q1" value="não" required>
+                        <label for="q1-no">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pergunta 2: O que pesa mais na sua decisão de vender biometria? -->
+            <div class="question">
+                <p>O que pesa mais na sua decisão de vender biometria?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="checkbox" id="q2-quality" name="q2" value="Qualidade do produto">
+                        <label for="q2-quality">Qualidade do produto</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q2-price" name="q2" value="Preço competitivo">
+                        <label for="q2-price">Preço competitivo</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q2-margin" name="q2" value="Margem de lucro">
+                        <label for="q2-margin">Margem de lucro</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q2-ease" name="q2" value="Facilidade de venda">
+                        <label for="q2-ease">Facilidade de venda</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q2-demand" name="q2" value="Demanda do cliente">
+                        <label for="q2-demand">Demanda do cliente</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q2-delivery" name="q2" value="Pronta entrega">
+                        <label for="q2-delivery">Pronta entrega</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q2-service" name="q2" value="Atendimento">
+                        <label for="q2-service">Atendimento</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pergunta 3: Você acredita que nossos produtos são competitivos no mercado? -->
+            <div class="question">
+                <p>Você acredita que nossos produtos são competitivos no mercado?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q3-yes" name="q3" value="Sim, são muito competitivos" required>
+                        <label for="q3-yes">Sim, são muito competitivos</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3-no" name="q3" value="Competitivos, mas com pontos de melhoria" required>
+                        <label for="q3-no">Competitivos, mas com pontos de melhoria</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3-improvement" name="q3" value="Pode melhorar em alguns aspectos" onclick="toggleImprovementBox(true)">
+                        <label for="q3-improvement">Pode melhorar em alguns aspectos</label>
+                    </div>
+                </div>
+                <div id="improvement-box">
+                    <input type="text" name="improvement" placeholder="Especifique como pode melhorar">
+                </div>
+            </div>
+
+            <!-- Pergunta 4: Qual a sua opinião sobre a queda nas vendas? -->
+            <div class="question">
+                <p>Qual a sua opinião sobre a queda nas vendas?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="checkbox" id="q4-market-demand" name="q4" value="Demanda de mercado">
+                        <label for="q4-market-demand">Demanda de mercado</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q4-competition" name="q4" value="Concorrência com produtos similares">
+                        <label for="q4-competition">Concorrência com produtos similares</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q4-focus-change" name="q4" value="Mudança no foco do negócio">
+                        <label for="q4-focus-change">Mudança no foco do negócio</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q4-low-margin" name="q4" value="Baixa margem">
+                        <label for="q4-low-margin">Baixa margem</label>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" id="q4-other" name="q4" value="Outro" onclick="toggleOtherBox()">
+                        <label for="q4-other">Outro</label>
+                    </div>
+                </div>
+                <div id="other-box">
+                    <input type="text" name="other-reason" placeholder="Especifique">
+                </div>
+            </div>
+
+            <!-- Pergunta 5: Você sabia que a TechMag tem solução de biometria facial? -->
+            <div class="question">
+                <p>Você sabia que a TechMag tem solução de biometria facial?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q5-yes" name="q5" value="sim" required>
+                        <label for="q5-yes">Sim</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5-no" name="q5" value="não" required>
+                        <label for="q5-no">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pergunta 6: Gostaria de receber um contato de nosso time comercial? -->
+            <div class="question">
+                <p>Gostaria de receber um contato de nosso time comercial?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q6-yes" name="q6" value="sim" required onclick="showContactOptions(true)">
+                        <label for="q6-yes">Sim</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6-no" name="q6" value="não" required onclick="showContactOptions(false)">
+                        <label for="q6-no">Não</label>
+                    </div>
+                </div>
+                <div id="contact-options" style="display:none;">
+                    <p>Como você gostaria de ser contatado?</p>
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" id="contact-email" name="contact" value="email" onclick="showContactInfo(true)">
+                            <label for="contact-email">E-mail</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="contact-phone" name="contact" value="telefone" onclick="showContactInfo(true)">
+                            <label for="contact-phone">Telefone</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="contact-whatsapp" name="contact" value="whatsapp" onclick="showContactInfo(true)">
+                            <label for="contact-whatsapp">WhatsApp</label>
+                        </div>
+                    </div>
+                    <div id="contact-info-box">
+                        <input type="text" name="contact-info" placeholder="Insira seu contato">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de Envio -->
+            <div>
+                <button type="submit" class="btn">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function toggleImprovementBox(shouldShow) {
+            document.getElementById('improvement-box').style.display = shouldShow ? 'block' : 'none';
+        }
+
+        function toggleOtherBox() {
+            const otherCheckbox = document.getElementById('q4-other');
+            const otherBox = document.getElementById('other-box');
+            if (otherCheckbox.checked) {
+                otherBox.style.display = 'block';
+            } else {
+                otherBox.style.display = 'none';
+            }
+        }
+
+        function showContactOptions(shouldShow) {
+            document.getElementById('contact-options').style.display = shouldShow ? 'block' : 'none';
+            document.getElementById('contact-info-box').style.display = 'none'; // Reset the contact info box
+        }
+
+        function showContactInfo(shouldShow) {
+            document.getElementById('contact-info-box').style.display = shouldShow ? 'block' : 'none';
+        }
+
+        function handleSubmit(event) {
+            // Previne o envio do formulário e redireciona
+            event.preventDefault(); 
+
+            // Envia o formulário normalmente
+            setTimeout(() => {
+                window.location.href = "https://techmag.com.br/site/"; // Redirecionar para o site
+            }, 500); // O tempo de espera (500ms) garante que o formulário seja enviado antes do redirecionamento
+
+            // Envia os dados do formulário para o Formspree
+            event.target.submit(); 
+        }
+    </script>
+</body>
+</html>
